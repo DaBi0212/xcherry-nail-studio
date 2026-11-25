@@ -1,0 +1,81 @@
+<div id="top" class="min-h-screen flex flex-col bg-[#FFFFFF] text-[#111111]">
+  <!-- Boutique Sticky Header with Official Logo -->
+  <app-header
+    [totalFinal]="quoteState.totalFinal()"
+    [totalMinutes]="quoteState.totalRequiredMinutesForAgenda()"
+    [currentStep]="quoteState.currentStep()"
+    (selectStep)="goToStep($event)"
+  />
+
+  <!-- Interactive 5-Step Wizard Progress Bar -->
+  <div class="bg-[#F9F9F9] border-b border-[#111111]/15 py-4 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
+        @for (item of steps; track item.step) {
+          <button
+            type="button"
+            (click)="goToStep(item.step)"
+            class="text-left p-2 sm:p-3 rounded-xl border transition-all flex flex-col justify-between"
+            [ngClass]="quoteState.currentStep() === item.step
+              ? 'bg-[#111111] text-white border-[#111111] shadow-sm scale-[1.01]'
+              : quoteState.currentStep() > item.step
+                ? 'bg-[#FFF0F3] text-[#111111] border-[#B8001F]/40 hover:border-[#B8001F]'
+                : 'bg-white text-[#111111]/60 border-[#111111]/15 hover:border-[#111111]/40'"
+          >
+            <div class="flex items-center justify-between gap-1">
+              <span
+                class="text-[11px] sm:text-xs font-bold truncate"
+                [ngClass]="quoteState.currentStep() === item.step ? 'text-white' : quoteState.currentStep() > item.step ? 'text-[#B8001F]' : 'text-[#111111]'"
+              >
+                {{ item.shortTitle }}
+              </span>
+              @if (quoteState.currentStep() > item.step) {
+                <span class="text-[10px] font-bold text-[#B8001F] shrink-0">✓</span>
+              }
+            </div>
+            <span
+              class="text-[10px] hidden sm:block truncate mt-0.5"
+              [ngClass]="quoteState.currentStep() === item.step ? 'text-white/75' : 'text-[#111111]/55'"
+            >
+              {{ item.subtitle }}
+            </span>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Single-Step Active Container (Wizard Step-by-Step View) -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6 sm:py-8">
+    @switch (quoteState.currentStep()) {
+      @case (1) {
+        <app-reference-analyzer (nextStep)="quoteState.nextStep()" />
+      }
+      @case (2) {
+        <app-interactive-quoter
+          (prevStep)="quoteState.prevStep()"
+          (nextStep)="quoteState.nextStep()"
+        />
+      }
+      @case (3) {
+        <app-distance-calculator
+          (prevStep)="quoteState.prevStep()"
+          (nextStep)="quoteState.nextStep()"
+        />
+      }
+      @case (4) {
+        <app-weekly-scheduler
+          (prevStep)="quoteState.prevStep()"
+          (nextStep)="quoteState.nextStep()"
+        />
+      }
+      @case (5) {
+        <app-client-checkout
+          (prevStep)="quoteState.prevStep()"
+        />
+      }
+    }
+  </main>
+
+  <app-footer />
+</div>

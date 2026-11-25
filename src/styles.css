@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #111111;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  .coquette-card {
+    @apply bg-[#F9F9F9] border border-[#111111]/15 rounded-2xl transition-all duration-200;
+  }
+
+  .coquette-card-sharp {
+    @apply bg-[#FFFFFF] border border-[#111111] rounded-xl shadow-sharp;
+  }
+
+  .btn-cherry {
+    @apply inline-flex items-center justify-center gap-2 bg-[#B8001F] hover:bg-[#D00024] active:scale-[0.99] text-white font-medium tracking-wide px-5 py-3.5 rounded-xl transition-all duration-200 shadow-cherry-glow disabled:opacity-45 disabled:pointer-events-none;
+  }
+
+  .btn-obsidian {
+    @apply inline-flex items-center justify-center gap-2 bg-[#111111] hover:bg-[#222222] active:scale-[0.99] text-white font-medium tracking-wide px-5 py-3 rounded-xl transition-all duration-200 disabled:opacity-45 disabled:pointer-events-none;
+  }
+
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2 bg-white hover:bg-[#F9F9F9] text-[#111111] border border-[#111111] font-medium px-4 py-2.5 rounded-xl transition-all duration-150;
+  }
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F9F9F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8001F;
+}
